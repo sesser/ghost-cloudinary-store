@@ -22,6 +22,6 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "2.10.x",
-    "cloudinary": "1.2.x"
+    "cloudinary": "^1.9.0"
   }
 }
