@@ -3,9 +3,6 @@ var BaseAdapter = require('ghost-storage-base'),
     Promise = require('bluebird'),
     cloudinary = require('cloudinary');
 
-var is = {
-    undefined: function(o) { return Object.prototype.toString.call(o) == '[object Undefined]'; }
-}
 
 // TODO: Add support for private_cdn
 // TODO: Add support for secure_distribution
@@ -17,6 +14,7 @@ class CloudinaryStorageAdapter extends BaseAdapter {
     constructor(config) {
         super()
         this.config = config || {};
+        this.config.secure = this.config.secure || false;
         cloudinary.config(this.config);
     }
 
@@ -28,7 +26,7 @@ class CloudinaryStorageAdapter extends BaseAdapter {
     }
 
     save(image, targetDir) {
-        let secure = is.undefined(this.config.secure) ? false : this.config.secure;
+        let secure = this.config.secure;
         return new Promise(function(resolve, reject) {
             cloudinary.v2.uploader.upload(image, function(err, result) {
                 if (err) reject(err);
